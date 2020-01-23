@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template/DefaultTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="left">
+        You are now at promotionHome.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h2>Welcome to Promotion Board</h2>
+    </ui:define>
+    
+    <ui:define name="content">
+        <h:body>
+            <h:form>
+                <ul>
+                    <li><h:commandLink value="View Promotions" action="viewPromotions.xhtml" /></li>
+                    <li><h:commandLink value="Add New Promotion" action="createPromotion.xhtml" /></li>
+                </ul>
+            </h:form>
+        </h:body>
+    </ui:define>
+    
+</ui:composition>
+

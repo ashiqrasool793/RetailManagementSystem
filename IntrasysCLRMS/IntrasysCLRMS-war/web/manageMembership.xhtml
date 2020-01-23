@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        You are now at manageMembership.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="membershipViewAll">
+            <p:dataTable id="viewAllTable" value="#{membershipManagedBean.membershipList}" var="membership" selectionMode="single" selection="#{membershipManagedBean.selectedMembership}" rowKey="#{membership.membershipId}">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Membership ID" />
+                    </f:facet>
+                    <h:outputText value="#{membership.membershipId}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Membership Type" />
+                    </f:facet>
+                    <h:outputText value="#{membership.membershipType}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Membership Fee" />
+                    </f:facet>
+                    <h:outputText value="#{membership.membershipFee}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Membership Remarks" />
+                    </f:facet>
+                    <h:outputText value="#{membership.membershipRemarks}" />
+                </p:column>
+                
+
+
+                <f:facet name="footer">
+                    <p:commandButton process="membershipViewAll" update=":create:addDetail" value="Create" oncomplete="PF('membershipAddDialog').show()" />
+
+                    <p:commandButton process="membershipViewAll" update=":membershipViewAll:editMembership" value="Edit" oncomplete="PF('membershipEditDialog').show()" />
+
+
+                </f:facet>
+            </p:dataTable>
+
+            <p:dialog header="Edit Membership" widgetVar="membershipEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="editMembership" style="text-align:center">
+                    <p:panelGrid  columns="3" columnClasses="label,value">
+
+                        <h:outputText value="Membership Type: " />
+                        <h:outputText value="#{membershipManagedBean.selectedMembership.membershipType}" />
+                        <h:inputText value="#{membershipManagedBean.membershipType}"></h:inputText>
+
+                        <h:outputText value="Membership Fee: " />
+                        <h:outputText value="#{membershipManagedBean.selectedMembership.membershipFee}" />
+                        <h:inputText value="#{membershipManagedBean.membershipFee}"></h:inputText>
+
+                        <h:outputText value="Membership Remarks: " />
+                        <h:outputText value="#{membershipManagedBean.selectedMembership.membershipRemarks}" />
+                        <h:inputText value="#{membershipManagedBean.membershipRemarks}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Save changes" update=":membershipViewAll:viewAllTable" action="#{membershipManagedBean.updateMembership()}" onclick="membershipEditDialog.hide()">
+                        <f:setPropertyActionListener target="#{membershipManagedBean.membershipId}" value="#{membershipManagedBean.selectedMembership.membershipId}"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Cancel" onclick="membershipEditDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <h:form id="create">
+            <p:dialog header="Add Membership" widgetVar="membershipAddDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="addDetail" style="text-align:center">
+                    <p:panelGrid columns="2"  columnClasses="label,value">
+
+                        <h:outputText value="Membership Type: " />
+                        <h:inputText value="#{membershipManagedBean.membershipType}"></h:inputText>
+
+                        <h:outputText value="Membership Fee: " />
+                        <h:inputText value="#{membershipManagedBean.membershipFee}"></h:inputText>
+
+                        <h:outputText value="Membership Remarks: " />
+                        <h:inputText value="#{membershipManagedBean.membershipRemarks}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Create" update=":membershipViewAll:viewAllTable" action="#{membershipManagedBean.createMembership()}" onclick="membershipAddDialog.hide()" />
+
+                    <p:commandButton value="Cancel" onclick="membershipAddDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

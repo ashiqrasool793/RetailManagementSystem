@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        You are now at viewAllRetailers.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="viewAll">
+            <p:dataTable id="viewAllTable" value="#{retailerManagedBean.retailers}" var="retailer" selectionMode="single" selection="#{retailerManagedBean.selectedRetailer}" rowKey="#{retailer.retailerId}">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Retailer ID" />
+                    </f:facet>
+                    <h:outputText value="#{retailer.retailerId}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Retailer Name" />
+                    </f:facet>
+                    <h:outputText value="#{retailer.retailerName}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Retailer Address" />
+                    </f:facet>
+                    <h:outputText value="#{retailer.retailerAddress}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Retailer Contact" />
+                    </f:facet>
+                    <h:outputText value="#{retailer.retailerContact}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Retailer Email" />
+                    </f:facet>
+                    <h:outputText value="#{retailer.retailerEmail}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Retailer Tier" />
+                    </f:facet>
+                    <h:outputText value="#{retailer.retailerTier}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Retailer Description" />
+                    </f:facet>
+                    <h:outputText value="#{retailer.retailerDescription}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Warehouse Limit" />
+                    </f:facet>
+                    <h:outputText value="#{retailer.warehouseLimit}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Store Limit" />
+                    </f:facet>
+                    <h:outputText value="#{retailer.storeLimit}" />
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton process="viewAll" update=":create:addDetail" value="Create" oncomplete="PF('retailerAddDialog').show()" />
+
+                    <p:commandButton process="viewAll" update=":viewAll:editDetail" value="Edit" oncomplete="PF('retailerEditDialog').show()" />
+
+                    <p:commandButton process="viewAll" update=":viewAll:viewAllTable" value="Delete" action="#{retailerManagedBean.deleteRetailer}" />
+                </f:facet>
+            </p:dataTable>
+
+            <p:dialog header="Edit Retailer" widgetVar="retailerEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="editDetail" style="text-align:center">
+                    <p:panelGrid  columns="3" columnClasses="label,value">
+
+                        <h:outputText value="Retailer Name: " />
+                        <h:outputText value="#{retailerManagedBean.selectedRetailer.retailerName}" />
+                        <h:inputText value="#{retailerManagedBean.retailerName}"></h:inputText>
+
+                        <h:outputText value="Retailer Address: " />
+                        <h:outputText value="#{retailerManagedBean.selectedRetailer.retailerAddress}" />
+                        <h:inputText value="#{retailerManagedBean.retailerAddress}"></h:inputText>
+
+                        <h:outputText value="Retailer Contact: " />
+                        <h:outputText value="#{retailerManagedBean.selectedRetailer.retailerContact}" />
+                        <h:inputText value="#{retailerManagedBean.retailerContact}"></h:inputText>
+
+                        <h:outputText value="Retailer Email: " />
+                        <h:outputText value="#{retailerManagedBean.selectedRetailer.retailerEmail}" />
+                        <h:inputText value="#{retailerManagedBean.retailerEmail}"></h:inputText>
+
+                        <h:outputText value="Retailer Tier: " />
+                        <h:outputText value="#{retailerManagedBean.selectedRetailer.retailerTier}" />
+                        <h:inputText value="#{retailerManagedBean.retailerTier}"></h:inputText>
+
+                        <h:outputText value="Retailer Description: " />
+                        <h:outputText value="#{retailerManagedBean.selectedRetailer.retailerDescription}" />
+                        <h:inputText value="#{retailerManagedBean.retailerDescription}"></h:inputText>
+
+                        <h:outputText value="Warehouse Limit: " />
+                        <h:outputText value="#{retailerManagedBean.selectedRetailer.warehouseLimit}" />
+                        <h:inputText value="#{retailerManagedBean.warehouseLimit}"></h:inputText>
+
+                        <h:outputText value="Store Limit: " />
+                        <h:outputText value="#{retailerManagedBean.selectedRetailer.storeLimit}" />
+                        <h:inputText value="#{retailerManagedBean.storeLimit}"></h:inputText>
+                    </p:panelGrid>
+
+                    <p:commandButton value="Save changes" update=":viewAll:viewAllTable" action="#{retailerManagedBean.saveRetailerUpdate}" onclick="retailerEditDialog.hide()">
+                        <f:setPropertyActionListener target="#{retailerManagedBean.retailerId}" value="#{retailerManagedBean.selectedRetailer.retailerId}"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Cancel" onclick="retailerEditDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <h:form id="create">
+            <p:dialog header="Add Retailer" widgetVar="retailerAddDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="addDetail" style="text-align:center">
+                    <p:panelGrid columns="2"  columnClasses="label,value">
+
+                        <h:outputText value="Retailer Name: " />
+                        <h:inputText value="#{retailerManagedBean.retailerName}"></h:inputText>
+
+                        <h:outputText value="Retailer Address: " />
+                        <h:inputText value="#{retailerManagedBean.retailerAddress}"></h:inputText>
+
+                        <h:outputText value="Retailer Contact: " />
+                        <h:inputText value="#{retailerManagedBean.retailerContact}"></h:inputText>
+
+                        <h:outputText value="Retailer Email: " />
+                        <h:inputText value="#{retailerManagedBean.retailerEmail}"></h:inputText>
+
+                        <h:outputText value="Retailer Tier: " />
+                        <h:inputText value="#{retailerManagedBean.retailerTier}"></h:inputText>
+
+                        <h:outputText value="Retailer Description: " />
+                        <h:inputText value="#{retailerManagedBean.retailerDescription}"></h:inputText>
+
+                        <h:outputText value="Warehouse Limit: " />
+                        <h:inputText value="#{retailerManagedBean.warehouseLimit}"></h:inputText>
+
+                        <h:outputText value="Store Limit: " />
+                        <h:inputText value="#{retailerManagedBean.storeLimit}"></h:inputText>
+
+                    </p:panelGrid>
+                    
+                    <p:commandButton value="Create" update=":viewAll:viewAllTable" action="#{retailerManagedBean.saveNewRetailer}" onclick="retailerAddDialog.hide()" />
+
+                    <p:commandButton value="Cancel" onclick="retailerAddDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

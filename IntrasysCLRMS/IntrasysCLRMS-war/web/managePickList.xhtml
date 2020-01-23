@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        You are now at managePickList.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="pickViewAll">
+            <p:dataTable id="viewAllTable" value="#{pickManagedBean.pickList}" var="pick" selectionMode="single" selection="#{pickManagedBean.selectedPick}" rowKey="#{pick.transferOrderId}">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Transfer Order ID" />
+                    </f:facet>
+                    <h:outputText value="#{pick.transferOrderId}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Pick List Status" />
+                    </f:facet>
+                    <h:outputText value="#{pick.status}" />
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton process="pickViewAll" update=":create:addDetail" value="Create" oncomplete="PF('pickAddDialog').show()" />
+
+                    <p:commandButton process="pickViewAll" update=":pickViewAll:editPick" value="Edit" oncomplete="PF('pickEditDialog').show()" />
+
+
+                </f:facet>
+            </p:dataTable>
+
+            <p:dialog header="Edit Pick List" widgetVar="pickEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="editPick" style="text-align:center">
+                    <p:panelGrid  columns="3" columnClasses="label,value">
+
+                        <h:outputText value="Pick List Status: " />
+                        <h:outputText value="#{pickManagedBean.selectedPick.status}" />
+                        <h:inputText value="#{pickManagedBean.pickStatus}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Save changes" update=":pickViewAll:viewAllTable" action="#{pickManagedBean.updatePickList()}" onclick="pickEditDialog.hide()">
+                        <f:setPropertyActionListener target="#{pickManagedBean.transferOrderId}" value="#{pickManagedBean.selectedPick.transferOrderId}"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Cancel" onclick="pickEditDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <h:form id="create">
+            <p:dialog header="Create Pick List" widgetVar="pickAddDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="addDetail" style="text-align:center">
+                    <p:panelGrid columns="2"  columnClasses="label,value">
+
+                        <h:outputText value="Pick List Status: " />
+                        <h:inputText value="#{pickManagedBean.pickStatus}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Create" update=":pickViewAll:viewAllTable" action="#{pickManagedBean.createPickList()}" onclick="pickAddDialog.hide()" />
+
+                    <p:commandButton value="Cancel" onclick="pickAddDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        You are now at viewPromotions.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h:dataTable cellpadding="3px" cellspacing="1px" styleClass="allaroundborder" headerClass="allaroundborder" columnClasses="allaroundborder" rowClasses="allaroundborder" value="#{promotionManagedBean.viewPromotions()}" var="promotions">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Promotion Code" />
+                </f:facet>
+                <h:outputText value="#{promotions.promotionCode}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Promotion Remarks" />
+                </f:facet>
+                <h:outputText value="#{promotions.promotionRemarks}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Promotion Start Time" />
+                </f:facet>
+                <h:outputText value="#{promotions.promotionStartTime}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Promotion End Time" />
+                </f:facet>
+                <h:outputText value="#{promotions.promotionEndTime}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Promotion Discount Percentage" />
+                </f:facet>
+                <h:outputText value="#{promotions.promotionDiscountPercent}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Promotion Discount Amount" />
+                </f:facet>
+                <h:outputText value="#{promotions.promotionDiscountAmount}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Promotion Type" />
+                </f:facet>
+                <h:outputText value="#{promotions.promotionType}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Promotion Items" />
+                </f:facet>
+                <h:outputText value="#{promotions.itemTypes}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Membership Promotion" />
+                </f:facet>
+                <h:outputText value="#{promotions.membershipTypes}" />
+            </h:column>
+        </h:dataTable>
+    </ui:define>
+
+</ui:composition>

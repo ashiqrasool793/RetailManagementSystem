@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        You are now at manageTransferOrders.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="transferViewAll">
+            <p:dataTable id="viewAllTable" value="#{transferOrdersManagedBean.transferOrderList}" var="transfer" selectionMode="single" selection="#{transferOrdersManagedBean.selectedTransferOrder}" rowKey="#{transfer.transferOrderId}">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Transfer Order ID" />
+                    </f:facet>
+                    <h:outputText value="#{transfer.transferOrderId}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Transfer Order Status" />
+                    </f:facet>
+                    <h:outputText value="#{transfer.status}" />
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton process="transferViewAll" update=":create:addDetail" value="Create" oncomplete="PF('transferAddDialog').show()" />
+
+                    <p:commandButton process="transferViewAll" update=":transferViewAll:editTransfer" value="Edit" oncomplete="PF('transferEditDialog').show()" />
+
+                    <p:commandButton process="transferViewAll" update=":transferViewAll:viewTransfer" value="View" oncomplete="PF('transferViewDialog').show()" />
+                    
+                </f:facet>
+            </p:dataTable>
+
+            <p:dialog header="Edit Transfer Order" widgetVar="transferEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="editTransfer" style="text-align:center">
+                    <p:panelGrid  columns="3" columnClasses="label,value">
+
+                        <h:outputText value="Transfer Order Status: " />
+                        <h:outputText value="#{transferOrdersManagedBean.selectedTransferOrder.status}" />
+                        <h:inputText value="#{transferOrdersManagedBean.transferOrderStatus}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Save changes" update=":transferViewAll:viewAllTable" action="#{transferOrdersManagedBean.updateTransferOrder()}" onclick="transferEditDialog.hide()">
+                        <f:setPropertyActionListener target="#{transferOrdersManagedBean.transferOrderId}" value="#{transferOrdersManagedBean.selectedTransferOrder.transferOrderId}"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Cancel" onclick="transferEditDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+             <p:dialog header="View Transfer Orders" widgetVar="transferViewDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="viewTransfer" style="text-align:center">
+                    <p:panelGrid  columns="2" columnClasses="label,value">
+
+                        <h:outputText value="Transfer Order ID: " />
+                        <h:outputText value="#{transferOrdersManagedBean.selectedTransferOrder.transferOrderId}" />
+                        
+                        <h:outputText value="Transfer Order Status: " />
+                        <h:outputText value="#{transferOrdersManagedBean.selectedTransferOrder.status}" />
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Cancel" onclick="transferViewDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <h:form id="create">
+            <p:dialog header="Add Transfer Order" widgetVar="transferAddDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="addDetail" style="text-align:center">
+                    <p:panelGrid columns="2"  columnClasses="label,value">
+
+                        <h:outputText value="Transfer Order Status: " />
+                        <h:inputText value="#{transferOrdersManagedBean.transferOrderStatus}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Create" update=":transferViewAll:viewAllTable" action="#{transferOrdersManagedBean.createTransferOrder()}" onclick="transferAddDialog.hide()" />
+
+                    <p:commandButton value="Cancel" onclick="transferAddDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://StoreManagementSystem/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://StoreManagementSystem/">
+
+<xs:element name="cartHasPromoItem" type="tns:cartHasPromoItem"/>
+
+<xs:element name="cartHasPromoItemResponse" type="tns:cartHasPromoItemResponse"/>
+
+<xs:element name="checkBulkDiscountAmount" type="tns:checkBulkDiscountAmount"/>
+
+<xs:element name="checkBulkDiscountAmountResponse" type="tns:checkBulkDiscountAmountResponse"/>
+
+<xs:element name="checkItemAItemBDiscount" type="tns:checkItemAItemBDiscount"/>
+
+<xs:element name="checkItemAItemBDiscountResponse" type="tns:checkItemAItemBDiscountResponse"/>
+
+<xs:element name="getItemDetails" type="tns:getItemDetails"/>
+
+<xs:element name="getItemDetailsResponse" type="tns:getItemDetailsResponse"/>
+
+<xs:element name="overallMembershipDiscount" type="tns:overallMembershipDiscount"/>
+
+<xs:element name="overallMembershipDiscountResponse" type="tns:overallMembershipDiscountResponse"/>
+
+<xs:element name="saveTransaction" type="tns:saveTransaction"/>
+
+<xs:element name="saveTransactionResponse" type="tns:saveTransactionResponse"/>
+
+<xs:element name="setPaymentDetails" type="tns:setPaymentDetails"/>
+
+<xs:element name="setPaymentDetailsResponse" type="tns:setPaymentDetailsResponse"/>
+
+<xs:complexType name="getItemDetails">
+<xs:sequence>
+<xs:element name="itemId" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getItemDetailsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="checkBulkDiscountAmount">
+<xs:sequence>
+<xs:element name="itemId" type="xs:long" minOccurs="0"/>
+<xs:element name="itemQty" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="checkBulkDiscountAmountResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cartHasPromoItem">
+<xs:sequence>
+<xs:element name="arg0" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="arg1" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cartHasPromoItemResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="saveTransaction">
+<xs:sequence>
+<xs:element name="iTid" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="iQty" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="idiscAmt" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="idiscP" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="iTPrice" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="transactionDetails" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="saveTransactionResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="checkItemAItemBDiscount">
+<xs:sequence>
+<xs:element name="arg0" type="xs:long" minOccurs="0"/>
+<xs:element name="arg1" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="checkItemAItemBDiscountResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="overallMembershipDiscount">
+<xs:sequence>
+<xs:element name="customerId" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="overallMembershipDiscountResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="setPaymentDetails">
+<xs:sequence>
+<xs:element name="paymentMethod" type="xs:string" minOccurs="0"/>
+<xs:element name="transactionID" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="setPaymentDetailsResponse">
+<xs:sequence/>
+</xs:complexType>
+</xs:schema>

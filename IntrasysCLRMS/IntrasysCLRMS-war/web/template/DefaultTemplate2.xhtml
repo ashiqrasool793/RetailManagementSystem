@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+        <h1>Main Menu</h1> 
+        <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td width="50%">
+                                <h:form>
+                                    <ul>
+                                        <li><h:commandLink value="Home" action="adminhome.xhtml" /></li>
+                                        <li><h:commandLink value="Retailers" action="manageretailers.xhtml" /></li>
+                                        <li><h:commandLink value="Promotion Board" action="promotionHome.xhtml" /></li>
+                                        <li><h:commandLink value="Logout" action="#{adminLoginManagedBean.logout}"/></li>
+                                    </ul>
+                                </h:form>                           
+                            </td>
+                            <td width="50%">
+                                <h:form>
+                                    <ul>
+                                        <li><h:commandLink value="Home" action="adminhome.xhtml" /></li>
+                                        <li><h:commandLink value="Retailers" action="manageretailers.xhtml" /></li>
+                                        <li><h:commandLink value="Promotion Board" action="promotionHome.xhtml" /></li>
+                                        <li><h:commandLink value="Logout" action="#{adminLoginManagedBean.logout}"/></li>
+                                    </ul>
+                                </h:form>  
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        <div id="left">    
+            <ui:insert name="left">Left</ui:insert>
+        </div>
+        <div id="content" class="left_content">
+            <h1>Content</h1>
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

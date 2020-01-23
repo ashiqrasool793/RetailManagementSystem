@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        You are now at manageadmin.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="viewAllAdmin">
+            <p:dataTable id="viewAllAdmins" value="#{adminManagedBean.admins}" var="admin" selectionMode="single" selection="#{adminManagedBean.selectedAdmin}" rowKey="#{admin.adminId}">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Admin ID" />
+                    </f:facet>
+                    <h:outputText value="#{admin.adminId}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Admin Username" />
+                    </f:facet>
+                    <h:outputText value="#{admin.adminUsername}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Admin Password" />
+                    </f:facet>
+                    <h:outputText value="#{admin.adminPassword}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Admin Contact" />
+                    </f:facet>
+                    <h:outputText value="#{admin.adminContact}" />
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton process="viewAllAdmin" update=":createAdmin:addDetailAdmin" value="Create" oncomplete="PF('adminAddDialog').show()" />
+
+                    <p:commandButton process="viewAllAdmin" update=":viewAllAdmin:editDetailAdmin" value="Edit" oncomplete="PF('adminEditDialog').show()" />
+
+                </f:facet>
+            </p:dataTable>
+
+            <p:dialog header="Edit Admin" widgetVar="adminEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="editDetailAdmin" style="text-align:center">
+                    <p:panelGrid  columns="3" columnClasses="label,value">
+
+                        <h:outputText value="Admin Username: " />
+                        <h:outputText value="#{adminManagedBean.selectedAdmin.adminUsername}" />
+                        <h:inputText value="#{adminManagedBean.adminUsername}"></h:inputText>
+
+                        <h:outputText value="Admin Password: " />
+                        <h:outputText value="#{adminManagedBean.selectedAdmin.adminPassword}" />
+                        <h:inputText value="#{adminManagedBean.adminPassword}"></h:inputText>
+
+                        <h:outputText value="Admin Contact: " />
+                        <h:outputText value="#{adminManagedBean.selectedAdmin.adminContact}" />
+                        <h:inputText value="#{adminManagedBean.adminContact}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Save changes" update=":viewAllAdmin:viewAllAdmins" action="#{adminManagedBean.editAdmin}" onclick="adminEditDialog.hide()" />
+
+                    <p:commandButton value="Cancel" onclick="adminEditDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <h:form id="createAdmin">
+            <p:dialog header="Add Admin" widgetVar="adminAddDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="addDetailAdmin" style="text-align:center">
+                    <p:panelGrid columns="2"  columnClasses="label,value">
+
+                        <h:outputText value="Admin Username: " />
+                        <h:inputText value="#{adminManagedBean.adminUsername}"></h:inputText>
+
+                        <h:outputText value="Admin Password: " />
+                        <h:inputText value="#{adminManagedBean.adminPassword}"></h:inputText>
+
+                        <h:outputText value="Admin Contact: " />
+                        <h:inputText value="#{adminManagedBean.adminContact}"></h:inputText>
+
+                    </p:panelGrid>
+                    
+                    <p:commandButton value="Create" update=":viewAllAdmin:viewAllAdmins" action="#{adminManagedBean.createAdmin}" onclick="adminAddDialog.hide()" />
+
+                    <p:commandButton value="Cancel" onclick="adminAddDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

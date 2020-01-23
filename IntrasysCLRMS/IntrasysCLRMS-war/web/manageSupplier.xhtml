@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        You are now at manageSupplier.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="supplierViewAll">
+            <p:dataTable id="viewAllTable" value="#{supplierManagedBean.supplierList}" var="supplier" selectionMode="single" selection="#{supplierManagedBean.selectedSupplier}" rowKey="#{supplier.supplierID}">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Supplier ID" />
+                    </f:facet>
+                    <h:outputText value="#{supplier.supplierID}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Supplier Name" />
+                    </f:facet>
+                    <h:outputText value="#{supplier.supplierName}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Supplier Username" />
+                    </f:facet>
+                    <h:outputText value="#{supplier.supplierUsername}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Supplier Email" />
+                    </f:facet>
+                    <h:outputText value="#{supplier.supplierEmail}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Supplier Contact" />
+                    </f:facet>
+                    <h:outputText value="#{supplier.supplierContact}" />
+                </p:column>
+           
+
+
+                <f:facet name="footer">
+                    <p:commandButton process="supplierViewAll" update=":create:addDetail" value="Create" oncomplete="PF('supplierAddDialog').show()" />
+
+                    <p:commandButton process="supplierViewAll" update=":supplierViewAll:editSupplier" value="Edit" oncomplete="PF('supplierEditDialog').show()" />
+
+
+                </f:facet>
+            </p:dataTable>
+
+            <p:dialog header="Edit Supplier" widgetVar="supplierEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="editSupplier" style="text-align:center">
+                    <p:panelGrid  columns="3" columnClasses="label,value">
+
+                        <h:outputText value="Supplier Name: " />
+                        <h:outputText value="#{supplierManagedBean.selectedSupplier.supplierName}" />
+                        <h:inputText value="#{supplierManagedBean.supplierName}"></h:inputText>
+
+                        <h:outputText value="Supplier Username: " />
+                        <h:outputText value="#{supplierManagedBean.selectedSupplier.supplierUsername}" />
+                        <h:inputText value="#{supplierManagedBean.supplierUsername}"></h:inputText>
+
+                        <h:outputText value="Supplier Email: " />
+                        <h:outputText value="#{supplierManagedBean.selectedSupplier.supplierEmail}" />
+                        <h:inputText value="#{supplierManagedBean.supplierEmail}"></h:inputText>
+
+                        <h:outputText value="Supplier Contact: " />
+                        <h:outputText value="#{supplierManagedBean.selectedSupplier.supplierContact}" />
+                        <h:inputText value="#{supplierManagedBean.supplierContact}"></h:inputText>
+
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Save changes" update=":supplierViewAll:viewAllTable" action="#{supplierManagedBean.updateSupplier()}" onclick="supplierEditDialog.hide()">
+                        <f:setPropertyActionListener target="#{supplierManagedBean.supplierId}" value="#{supplierManagedBean.selectedSupplier.supplierID}"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Cancel" onclick="supplierEditDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <h:form id="create">
+            <p:dialog header="Add Supplier" widgetVar="supplierAddDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="addDetail" style="text-align:center">
+                    <p:panelGrid columns="2"  columnClasses="label,value">
+
+                        <h:outputText value="Supplier Name: " />
+                        <h:inputText value="#{supplierManagedBean.supplierName}"></h:inputText>
+
+                        <h:outputText value="Supplier Username: " />
+                        <h:inputText value="#{supplierManagedBean.supplierUsername}"></h:inputText>
+
+                        <h:outputText value="Supplier Email: " />
+                        <h:inputText value="#{supplierManagedBean.supplierEmail}"></h:inputText>
+
+                        <h:outputText value="Supplier Contact: " />
+                        <h:inputText value="#{supplierManagedBean.supplierContact}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Create" update=":supplierViewAll:viewAllTable" action="#{supplierManagedBean.createNewSupplier()}" onclick="supplierAddDialog.hide()" />
+
+                    <p:commandButton value="Cancel" onclick="supplierAddDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

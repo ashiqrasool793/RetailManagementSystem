@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        You are now at updatePurchaseOrderStatus.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="deliveryViewAll">
+            <p:dataTable id="viewAllTable" value="#{deliveryManagedBean.purchaseOrderList}" var="delivery" selectionMode="single" selection="#{deliveryManagedBean.selectedPurchaseOrder}" rowKey="#{delivery.purchaseOrderId}">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Purchase Order ID" />
+                    </f:facet>
+                    <h:outputText value="#{delivery.purchaseOrderId}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Purchase Order Status" />
+                    </f:facet>
+                    <h:outputText value="#{delivery.remarks}" />
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton process="deliveryViewAll" update=":create:addDetail" value="Create" oncomplete="PF('deliveryAddDialog').show()" />
+
+                    <p:commandButton process="deliveryViewAll" update=":deliveryViewAll:editDelivery" value="Edit" oncomplete="PF('deliveryEditDialog').show()" />
+
+
+                </f:facet>
+            </p:dataTable>
+
+            <p:dialog header="Edit Purchase Order Status" widgetVar="deliveryEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="editDelivery" style="text-align:center">
+                    <p:panelGrid  columns="3" columnClasses="label,value">
+
+                        <h:outputText value="Purchase Order Status: " />
+                        <h:outputText value="#{deliveryManagedBean.selectedPurchaseOrder.remarks}" />
+                        <h:inputText value="#{deliveryManagedBean.purchaseOrderStatus}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Save changes" update=":deliveryViewAll:viewAllTable" action="#{deliveryManagedBean.updatePurchaseOrder()}" onclick="deliveryEditDialog.hide()">
+                        <f:setPropertyActionListener target="#{deliveryManagedBean.purchaseOrderId}" value="#{deliveryManagedBean.selectedPurchaseOrder.purchaseOrderId}"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Cancel" onclick="deliveryEditDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <h:form id="create">
+            <p:dialog header="Create Purchase Order" widgetVar="deliveryAddDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="addDetail" style="text-align:center">
+                    <p:panelGrid columns="2"  columnClasses="label,value">
+
+                        <h:outputText value="Purchase Order Status: " />
+                        <h:inputText value="#{deliveryManagedBean.purchaseOrderStatus}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Create" update=":deliveryViewAll:viewAllTable" action="#{deliveryManagedBean.createPurchaseOrder()}" onclick="deliveryAddDialog.hide()" />
+
+                    <p:commandButton value="Cancel" onclick="deliveryAddDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

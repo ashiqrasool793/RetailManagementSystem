@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        You are now at manageItemType.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="itemTypeViewAll">
+            <p:dataTable id="viewAllTable" value="#{itemTypeManagedBean.itemTypesList}" var="itemType" selectionMode="single" selection="#{itemTypeManagedBean.selectedItemType}" rowKey="#{itemType.itemTypeId}">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item Type ID" />
+                    </f:facet>
+                    <h:outputText value="#{itemType.itemTypeId}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item Name" />
+                    </f:facet>
+                    <h:outputText value="#{itemType.itemName}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item Description" />
+                    </f:facet>
+                    <h:outputText value="#{itemType.itemDescription}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item Category" />
+                    </f:facet>
+                    <h:outputText value="#{itemType.itemCategory}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item Sub-Category" />
+                    </f:facet>
+                    <h:outputText value="#{itemType.itemSubCategory}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item Picture" />
+                    </f:facet>
+                    <h:outputText value="#{itemType.itemPicture}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item Base Price" />
+                    </f:facet>
+                    <h:outputText value="#{itemType.itemBasePrice}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Item Sale Price" />
+                    </f:facet>
+                    <h:outputText value="#{itemType.itemSalePrice}" />
+                </p:column>
+
+
+                <f:facet name="footer">
+                    <p:commandButton process="itemTypeViewAll" update=":create:addDetail" value="Create" oncomplete="PF('itemTypeAddDialog').show()" />
+
+                    <p:commandButton process="itemTypeViewAll" update=":itemTypeViewAll:editItemType" value="Edit" oncomplete="PF('itemTypeEditDialog').show()" />
+
+
+                </f:facet>
+            </p:dataTable>
+
+            <p:dialog header="Edit Item Type" widgetVar="itemTypeEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="editItemType" style="text-align:center">
+                    <p:panelGrid  columns="3" columnClasses="label,value">
+
+                        <h:outputText value="Item Name: " />
+                        <h:outputText value="#{itemTypeManagedBean.selectedItemType.itemName}" />
+                        <h:inputText value="#{itemTypeManagedBean.itemName}"></h:inputText>
+
+                        <h:outputText value="Item Description: " />
+                        <h:outputText value="#{itemTypeManagedBean.selectedItemType.itemDescription}" />
+                        <h:inputText value="#{itemTypeManagedBean.itemDescription}"></h:inputText>
+
+                        <h:outputText value="Item Category: " />
+                        <h:outputText value="#{itemTypeManagedBean.selectedItemType.itemCategory}" />
+                        <h:inputText value="#{itemTypeManagedBean.itemCategory}"></h:inputText>
+
+                        <h:outputText value="Item Sub-Category: " />
+                        <h:outputText value="#{itemTypeManagedBean.selectedItemType.itemSubCategory}" />
+                        <h:inputText value="#{itemTypeManagedBean.itemSubCategory}"></h:inputText>
+
+                        <h:outputText value="Item Picture: " />
+                        <h:outputText value="#{itemTypeManagedBean.selectedItemType.itemPicture}" />
+                        <h:inputText value="#{itemTypeManagedBean.dummy}"></h:inputText>
+
+                        <h:outputText value="Item Base Price: " />
+                        <h:outputText value="#{itemTypeManagedBean.selectedItemType.itemBasePrice}" />
+                        <h:inputText value="#{itemTypeManagedBean.itemBasePrice}"></h:inputText>
+
+                        <h:outputText value="Item Sale Price: " />
+                        <h:outputText value="#{itemTypeManagedBean.selectedItemType.itemSalePrice}" />
+                        <h:inputText value="#{itemTypeManagedBean.itemSalePrice}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Save changes" update=":itemTypeViewAll:viewAllTable" action="#{itemTypeManagedBean.updateItemType()}" onclick="itemTypeEditDialog.hide()">
+                        <f:setPropertyActionListener target="#{itemTypeManagedBean.itemTypeId}" value="#{itemTypeManagedBean.selectedItemType.itemTypeId}"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Cancel" onclick="itemTypeEditDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <h:form id="create">
+            <p:dialog header="Add Item Type" widgetVar="itemTypeAddDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="addDetail" style="text-align:center">
+                    <p:panelGrid columns="2"  columnClasses="label,value">
+
+                        <h:outputText value="Item Name: " />
+                        <h:inputText value="#{itemTypeManagedBean.itemName}"></h:inputText>
+
+                        <h:outputText value="Item Description: " />
+                        <h:inputText value="#{itemTypeManagedBean.itemDescription}"></h:inputText>
+
+                        <h:outputText value="Item Category: " />
+                        <h:inputText value="#{itemTypeManagedBean.itemCategory}"></h:inputText>
+
+                        <h:outputText value="Item Sub-Category: " />
+                        <h:inputText value="#{itemTypeManagedBean.itemSubCategory}"></h:inputText>
+
+                        <h:outputText value="Item Picture: " />
+                        <h:inputText value="#{itemTypeManagedBean.itemPicture}"></h:inputText>
+
+                        <h:outputText value="Item Base Price: " />
+                        <h:inputText value="#{itemTypeManagedBean.itemBasePrice}"></h:inputText>
+
+                        <h:outputText value="Item Sale Price: " />
+                        <h:inputText value="#{itemTypeManagedBean.itemSalePrice}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Create" update=":itemTypeViewAll:viewAllTable" action="#{itemTypeManagedBean.createNewItemType()}" onclick="itemTypeAddDialog.hide()" />
+
+                    <p:commandButton value="Cancel" onclick="itemTypeAddDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

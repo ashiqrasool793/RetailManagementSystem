@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        You are now at manageLocation.xhtml
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="locationViewAll">
+            <p:dataTable id="viewAllTable" value="#{locationManagedBean.locationList}" var="location" selectionMode="single" selection="#{locationManagedBean.selectedLocation}" rowKey="#{location.locationId}">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location ID" />
+                    </f:facet>
+                    <h:outputText value="#{location.locationId}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location Name" />
+                    </f:facet>
+                    <h:outputText value="#{location.locationName}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location Address" />
+                    </f:facet>
+                    <h:outputText value="#{location.locationAddress}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location Contact" />
+                    </f:facet>
+                    <h:outputText value="#{location.locationContact}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location Email" />
+                    </f:facet>
+                    <h:outputText value="#{location.locationEmail}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location Description" />
+                    </f:facet>
+                    <h:outputText value="#{location.locationDesc}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location Type" />
+                    </f:facet>
+                    <h:outputText value="#{location.locationType}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Location Status" />
+                    </f:facet>
+                    <h:outputText value="#{location.locationStatus}" />
+                </p:column>
+
+
+                <f:facet name="footer">
+                    <p:commandButton process="locationViewAll" update=":create:addDetail" value="Create" oncomplete="PF('locationAddDialog').show()" />
+
+                    <p:commandButton process="locationViewAll" update=":locationViewAll:editLocation" value="Edit" oncomplete="PF('locationEditDialog').show()" />
+
+                    <p:commandButton process="locationViewAll" update=":locationViewAll:viewLocation" value="View" oncomplete="PF('locationViewDialog').show()" />
+
+                </f:facet>
+            </p:dataTable>
+
+            <p:dialog header="Edit Location" widgetVar="locationEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="editLocation" style="text-align:center">
+                    <p:panelGrid  columns="3" columnClasses="label,value">
+
+                        <h:outputText value="Location Name: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationName}" />
+                        <h:inputText value="#{locationManagedBean.locationName}"></h:inputText>
+
+                        <h:outputText value="Location Address: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationAddress}" />
+                        <h:inputText value="#{locationManagedBean.locationAddress}"></h:inputText>
+
+                        <h:outputText value="Location Contact: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationContact}" />
+                        <h:inputText value="#{locationManagedBean.locationContact}"></h:inputText>
+
+                        <h:outputText value="Location Email: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationEmail}" />
+                        <h:inputText value="#{locationManagedBean.locationEmail}"></h:inputText>
+
+                        <h:outputText value="Location Description: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationDesc}" />
+                        <h:inputText value="#{locationManagedBean.locationDesc}"></h:inputText>
+
+                        <h:outputText value="Location Type: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationType}" />
+                        <h:inputText value="#{locationManagedBean.locationType}"></h:inputText>
+
+                        <h:outputText value="Location Status: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationStatus}" />
+                        <h:inputText value="#{locationManagedBean.locationStatus}"></h:inputText>
+
+                        <h:outputText value="Location Parent: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationParent}" />
+                        <h:inputText value="#{locationManagedBean.locationParent}"></h:inputText>
+
+                        <h:outputText value="Location Child: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationChild}" />
+                        <h:inputText value="#{locationManagedBean.locationChild}"></h:inputText>
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Save changes" update=":locationViewAll:viewAllTable" action="#{locationManagedBean.updateLocation()}" onclick="locationEditDialog.hide()">
+                        <f:setPropertyActionListener target="#{locationManagedBean.locationId}" value="#{locationManagedBean.selectedLocation.locationId}"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Cancel" onclick="locationEditDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+            <p:dialog header="View Location" widgetVar="locationViewDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="viewLocation" style="text-align:center">
+                    <p:panelGrid  columns="2" columnClasses="label,value">
+
+                        <h:outputText value="Location ID: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationId}" />
+                        
+                        <h:outputText value="Location Name: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationName}" />
+
+
+                        <h:outputText value="Location Address: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationAddress}" />
+
+
+                        <h:outputText value="Location Contact: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationContact}" />
+
+
+                        <h:outputText value="Location Email: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationEmail}" />
+
+
+                        <h:outputText value="Location Description: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationDesc}" />
+
+
+                        <h:outputText value="Location Type: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationType}" />
+
+
+                        <h:outputText value="Location Status: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationStatus}" />
+
+
+                        <h:outputText value="Location Parent: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationParent}" />
+
+
+                        <h:outputText value="Location Child: " />
+                        <h:outputText value="#{locationManagedBean.selectedLocation.locationChild}" />
+
+
+                    </p:panelGrid>
+
+                    <p:commandButton value="Cancel" onclick="locationViewDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <h:form id="create">
+            <p:dialog header="Add Item Type" widgetVar="locationAddDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="addDetail" style="text-align:center">
+                    <p:panelGrid columns="2"  columnClasses="label,value">
+
+                        <h:outputText value="Location Name: " />
+                        <h:inputText value="#{locationManagedBean.locationName}"></h:inputText>
+
+                        <h:outputText value="Location Address: " />
+                        <h:inputText value="#{locationManagedBean.locationAddress}"></h:inputText>
+
+                        <h:outputText value="Location Contact: " />
+                        <h:inputText value="#{locationManagedBean.locationContact}"></h:inputText>
+
+                        <h:outputText value="Location Email: " />
+                        <h:inputText value="#{locationManagedBean.locationEmail}"></h:inputText>
+
+                        <h:outputText value="Location Description: " />
+                        <h:inputText value="#{locationManagedBean.locationDesc}"></h:inputText>
+
+                        <h:outputText value="Location Type: " />
+                        <h:inputText value="#{locationManagedBean.locationType}"></h:inputText>
+
+                        <h:outputText value="Location Status: " />
+                        <h:inputText value="#{locationManagedBean.locationStatus}"></h:inputText>
+
+                        <h:outputText value="Location Parent: " />
+                        <h:inputText value="#{locationManagedBean.locationParent}"></h:inputText>
+
+                        <h:outputText value="Location Child: " />
+                        <h:inputText value="#{locationManagedBean.locationChild}"></h:inputText>
+                    </p:panelGrid>
+
+                    <p:commandButton value="Create" update=":locationViewAll:viewAllTable" action="#{locationManagedBean.createLocation()}" onclick="locationAddDialog.hide()" />
+
+                    <p:commandButton value="Cancel" onclick="locationAddDialog.hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>
